@@ -1,1 +1,4 @@
-pytest\npylint\ncoverage
+pytest
+pylint
+coverage
+
