@@ -1,38 +1,29 @@
-"""Unit tests for the calculator."""
-
 import pytest
 from calculator.calculator import Calculator
-from calculator.calculations import Calculations
 
-@pytest.fixture
-def sample_numbers():
-    return 10, 5
+def test_calculator_addition():
+    assert Calculator.add(5, 3) == 8
 
-@pytest.mark.parametrize("a, b, expected", [(2, 3, 5), (-1, 1, 0), (0, 0, 0)])
-def test_add(a, b, expected):
-    assert Calculator.add(a, b) == expected
+def test_calculator_subtraction():
+    assert Calculator.subtract(10, 2) == 8
 
-@pytest.mark.parametrize("a, b, expected", [(2, 3, -1), (5, 10, -5), (0, 0, 0)])
-def test_subtract(a, b, expected):
-    assert Calculator.subtract(a, b) == expected
+def test_calculator_multiplication():
+    assert Calculator.multiply(4, 5) == 20
 
-@pytest.mark.parametrize("a, b, expected", [(2, 3, 6), (-1, 1, -1), (0, 5, 0)])
-def test_multiply(a, b, expected):
-    assert Calculator.multiply(a, b) == expected
+def test_calculator_division():
+    assert Calculator.divide(20, 4) == 5
 
-def test_divide(sample_numbers):
-    a, b = sample_numbers
-    assert Calculator.divide(a, b) == 2
-
-def test_divide_by_zero():
+def test_calculator_division_by_zero():
     with pytest.raises(ZeroDivisionError):
-        Calculator.divide(10, 0)
+        Calculator.divide(1, 0)
 
-def test_calculations_history():
-    """Tests storing and retrieving calculations."""
-    Calculations.clear_history()
-    Calculator.add(1, 1)
-    last_calc = Calculations.get_last_calculation()
-    assert last_calc is not None
-    assert last_calc.result == 2
+def test_calculator_calculate():
+    assert Calculator.calculate(5, 3, "add") == 8
+    assert Calculator.calculate(10, 2, "subtract") == 8
+    assert Calculator.calculate(4, 5, "multiply") == 20
+    assert Calculator.calculate(20, 4, "divide") == 5
+
+def test_calculator_unknown_operation():
+    with pytest.raises(ValueError):
+        Calculator.calculate(5, 3, "unknown")
 

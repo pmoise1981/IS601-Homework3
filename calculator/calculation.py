@@ -1,14 +1,21 @@
-"""Stores a single calculation operation."""
-
 class Calculation:
-    """Represents a single arithmetic operation."""
-
-    def __init__(self, a: float, b: float, operation: str, result: float):
+    def __init__(self, a, b, operation):
         self.a = a
         self.b = b
         self.operation = operation
-        self.result = result
 
-    def __str__(self):
-        return f"{self.a} {self.operation} {self.b} = {self.result}"
+    def perform(self):
+        if self.operation == "add":
+            return self.a + self.b
+        elif self.operation == "subtract":
+            return self.a - self.b
+        elif self.operation == "multiply":
+            return self.a * self.b
+        elif self.operation == "divide":
+            if self.b == 0:
+                raise ZeroDivisionError("Cannot divide by zero")
+            return self.a / self.b
+        else:
+            raise ValueError(f"Unknown operation: {self.operation}")
+
 

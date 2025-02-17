@@ -1,35 +1,33 @@
-"""Calculator class with history storage."""
-
-from calculator.calculations import Calculations
-from calculator.calculation import Calculation
-
 class Calculator:
-    """Calculator with arithmetic operations and history."""
+    @staticmethod
+    def add(a, b):
+        return a + b
 
     @staticmethod
-    def add(a: float, b: float) -> float:
-        result = a + b
-        Calculations.add_calculation(Calculation(a, b, "add", result))
-        return result
+    def subtract(a, b):
+        return a - b
 
     @staticmethod
-    def subtract(a: float, b: float) -> float:
-        result = a - b
-        Calculations.add_calculation(Calculation(a, b, "subtract", result))
-        return result
+    def multiply(a, b):
+        return a * b
 
     @staticmethod
-    def multiply(a: float, b: float) -> float:
-        result = a * b
-        Calculations.add_calculation(Calculation(a, b, "multiply", result))
-        return result
-
-    @staticmethod
-    def divide(a: float, b: float) -> float:
+    def divide(a, b):
         if b == 0:
             raise ZeroDivisionError("Cannot divide by zero")
-        result = a / b
-        Calculations.add_calculation(Calculation(a, b, "divide", result))
-        return result
+        return a / b
+
+    @staticmethod
+    def calculate(a, b, operation):
+        if operation == "add":
+            return Calculator.add(a, b)
+        elif operation == "subtract":
+            return Calculator.subtract(a, b)
+        elif operation == "multiply":
+            return Calculator.multiply(a, b)
+        elif operation == "divide":
+            return Calculator.divide(a, b)
+        else:
+            raise ValueError(f"Unknown operation: {operation}")
 
 
