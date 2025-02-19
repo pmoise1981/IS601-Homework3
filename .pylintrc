@@ -1,0 +1,7 @@
+[MESSAGES CONTROL]
+disable=
+    missing-docstring,  # Disable missing docstrings warning (C0114, C0115, C0116)
+    trailing-newlines,  # Disable trailing newlines warning (C0305)
+    too-few-public-methods,  # Disable too-few-public-methods warning (R0903)
+    no-else-return  # Disable unnecessary 'elif' after return warning (R1705)
+
