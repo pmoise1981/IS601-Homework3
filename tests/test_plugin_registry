@@ -1,0 +1,12 @@
+import pytest
+from calculator.plugin_registry import PluginRegistry
+from calculator.commands.add import AddCommand
+
+def test_register_command():
+    PluginRegistry.register("test_add", AddCommand, "Test addition")
+    assert "test_add" in PluginRegistry.get_all_commands()
+
+def test_get_command():
+    command_class = PluginRegistry.get_command("test_add")
+    assert command_class is AddCommand
+
