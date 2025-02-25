@@ -22,6 +22,12 @@ class PluginRegistry:
         return cls._commands
 
     @classmethod
+    def get_available_commands(cls):
+        """Return a formatted string of available commands."""
+        commands_list = ", ".join(cls._commands.keys())
+        return f"Available commands: {commands_list}" if commands_list else "No commands available."
+
+    @classmethod
     def load_plugins(cls):
         """Dynamically discover and import all command plugins."""
         package = calculator.commands
