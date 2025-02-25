@@ -1,33 +1,13 @@
+from calculator.plugin_registry import PluginRegistry
+
 class Calculator:
     @staticmethod
-    def add(a, b):
-        return a + b
-
-    @staticmethod
-    def subtract(a, b):
-        return a - b
-
-    @staticmethod
-    def multiply(a, b):
-        return a * b
-
-    @staticmethod
-    def divide(a, b):
-        if b == 0:
-            raise ZeroDivisionError("Cannot divide by zero")
-        return a / b
-
-    @staticmethod
-    def calculate(a, b, operation):
-        if operation == "add":
-            return Calculator.add(a, b)
-        elif operation == "subtract":
-            return Calculator.subtract(a, b)
-        elif operation == "multiply":
-            return Calculator.multiply(a, b)
-        elif operation == "divide":
-            return Calculator.divide(a, b)
+    def execute_command(command_name, *args):
+        command_class = PluginRegistry.get_command(command_name)
+        if command_class:
+            command = command_class(*args)
+            return command.execute()
         else:
-            raise ValueError(f"Unknown operation: {operation}")
+            raise ValueError(f"Command '{command_name}' not found.")
 
 
