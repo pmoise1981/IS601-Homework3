@@ -1,10 +1,21 @@
-from .operations import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from .plugin_registry import PluginRegistry
 from .invoker import CalculatorInvoker
+import importlib
+import pkgutil
+import calculator
+
+def load_plugins():
+    """Dynamically load all modules in the 'calculator' package."""
+    package = calculator
+    for _, module_name, _ in pkgutil.iter_modules(package.__path__):
+        importlib.import_module(f"calculator.{module_name}")
 
 def repl():
+    """Interactive calculator using dynamically loaded commands."""
+    load_plugins()  # Load all available plugins
     print("Welcome to the Interactive Calculator!")
     print("Enter operations in the format: <num1> <operator> <num2>")
-    print("Supported operators: add, sub, mul, div")
+    print(f"Supported operators: {', '.join(PluginRegistry.get_all_commands().keys())}")
     print("Type 'exit' to quit.\n")
 
     calculator = CalculatorInvoker()
@@ -23,17 +34,11 @@ def repl():
             num1, operation, num2 = parts
             num1, num2 = float(num1), float(num2)
 
-            command_map = {
-                "add": AddCommand(num1, num2),
-                "sub": SubtractCommand(num1, num2),
-                "mul": MultiplyCommand(num1, num2),
-                "div": DivideCommand(num1, num2)
-            }
+            command_class = PluginRegistry.get_command(operation)
+            if not command_class:
+                raise ValueError(f"Unsupported operation! Available: {', '.join(PluginRegistry.get_all_commands().keys())}")
 
-            if operation not in command_map:
-                raise ValueError("Unsupported operation!")
-
-            command = command_map[operation]
+            command = command_class(num1, num2)
             result = calculator.execute_command(command)
             print(f"Result: {result}")
 
