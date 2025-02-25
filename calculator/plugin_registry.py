@@ -1,3 +1,7 @@
+import importlib
+import pkgutil
+import calculator.commands  # Import the commands package dynamically
+
 class PluginRegistry:
     """Registry to store available calculator operations dynamically."""
     _commands = {}
@@ -16,4 +20,11 @@ class PluginRegistry:
     def get_all_commands(cls):
         """Return all registered commands."""
         return cls._commands
+
+    @classmethod
+    def load_plugins(cls):
+        """Dynamically discover and import all command plugins."""
+        package = calculator.commands
+        for _, module_name, _ in pkgutil.iter_modules(package.__path__):
+            importlib.import_module(f"calculator.commands.{module_name}")
 
