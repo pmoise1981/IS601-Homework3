@@ -2,14 +2,17 @@ class PluginRegistry:
     _commands = {}
 
     @classmethod
-    def register(cls, name, command):
-        cls._commands[name] = command
+    def register(cls, command_name, command_class):
+        if command_name in cls._commands:
+            raise ValueError(f"Command '{command_name}' is already registered.")
+        cls._commands[command_name] = command_class
 
     @classmethod
-    def get_command(cls, name):
-        return cls._commands.get(name)
+    def get_command(cls, command_name):
+        return cls._commands.get(command_name)
 
     @classmethod
-    def get_available_commands(cls):
-        return list(cls._commands.keys())
+    def reset(cls):
+        """Clears all registered commands."""
+        cls._commands = {}
 

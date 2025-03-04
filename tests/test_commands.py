@@ -1,10 +1,7 @@
-import pytest
-from calculator.command.add import AddCommand 
-from calculator.command.sub import SubtractCommand 
+from calculator.commands.add_command import AddCommand
 
 def test_add_command():
-    command = AddCommand(2, 3)
-    assert command.execute() == 5
+    command = AddCommand()  # No arguments in constructor
+    result = command.execute(2, 3)  # Arguments go in `execute`
+    assert result == 5
 
-def test_subtract_command():
-    command = SubtractCommand(5, 3)

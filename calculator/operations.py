@@ -1,23 +1,25 @@
-from .command import Command
+from calculator.logger import logger
 
-class AddCommand(Command):
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
+def add(a, b):
+    result = a + b
+    logger.info(f"Adding {a} + {b} = {result}")
+    return result
 
-    def execute(self):
-        return self.a + self.b
+def subtract(a, b):
+    result = a - b
+    logger.info(f"Subtracting {a} - {b} = {result}")
+    return result
 
-# Self-registering command
-AddCommand.register("add")
+def multiply(a, b):
+    result = a * b
+    logger.info(f"Multiplying {a} * {b} = {result}")
+    return result
 
-class SubtractCommand(Command):
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-
-    def execute(self):
-        return self.a - self.b
-
-SubtractCommand.register("sub")
+def divide(a, b):
+    if b == 0:
+        logger.error("Attempted division by zero")
+        raise ValueError("Cannot divide by zero")
+    result = a / b
+    logger.info(f"Dividing {a} / {b} = {result}")
+    return result
 

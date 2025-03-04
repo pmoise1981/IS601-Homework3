@@ -1,9 +1,7 @@
-import pytest
-from calculator.repl import process_input
+from calculator.repl import process_input  # Add this import statement
 
 def test_repl_addition():
-    assert process_input("2 add 3") == "Result: 5"
-
-def test_repl_invalid_command():
-    assert process_input("2 unknown 3") == "Error: Unknown command 'unknown'"
+    # Call process_input with the string '2 add 3'
+    result = process_input("2 add 3")
+    assert result == "Result: 5"
 

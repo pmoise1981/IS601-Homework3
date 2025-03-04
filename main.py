@@ -1,34 +1,20 @@
+import sys
 from calculator.calculator import Calculator
-from calculator.plugin_registry import PluginRegistry
-import calculator.commands.add
-import calculator.commands.subtract
-import calculator.commands.multiply
-import calculator.commands.divide
 
 def main():
-    print("Welcome to the Interactive Calculator!")
-    print("Type 'menu' to see available commands or 'exit' to quit.")
+    # Get arguments from command line input
+    if len(sys.argv) != 4:
+        print("Usage: python main.py <num1> <num2> <operation>")
+        return
 
-    while True:
-        command = input("Enter command: ").strip().lower()
+    a = int(sys.argv[1])
+    b = int(sys.argv[2])
+    operation = sys.argv[3]
 
-        if command == "exit":
-            print("Exiting the calculator. Goodbye!")
-            break
-        elif command == "menu":
-            print("Available commands:", ", ".join(PluginRegistry.get_available_commands()))
-        else:
-            args = input("Enter two numbers separated by space: ").split()
-            if len(args) != 2:
-                print("Please enter exactly two numbers.")
-                continue
-            
-            try:
-                a, b = map(float, args)
-                result = Calculator.execute_command(command, a, b)
-                print(f"Result: {result}")
-            except ValueError as e:
-                print(f"Error: {e}")
+    result = Calculator.execute_command(operation, a, b)
+
+    # Output the result
+    print(f"The result of {a} {operation} {b} is equal to {result}")
 
 if __name__ == "__main__":
     main()
